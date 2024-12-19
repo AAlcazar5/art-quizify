@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      maxHeight: {
+        'md': '28rem', // Define your custom max height value here
+      },
     },
   },
   plugins: [],
