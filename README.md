@@ -18,7 +18,7 @@ This Encode student project is a web application that allows users to upload an 
 - Node.js and npm
 - Python 3.10 (PyTorch is not compatible with versions past 3.10)
 - Git
-- Jupyter Notebook
+- Jupyter Notebook, Jupyter Notebook Extension (VSCode)
 
 ## Setup Instructions
 
@@ -68,13 +68,9 @@ npm run dev
 - The model was finetuned with a WikiArt Kaggle repo https://www.kaggle.com/datasets/sivarazadi/wikiart-art-movementsstyles.
   - However, you can pick whatever data source you'd like
 - To use Jupyter Notebook: 
-  - Access your terminal
-  - `cd /your/project/directory/here`
-  - Activate your virtual environment
-    - `pip install notebook`
-    - `jupyter lab`
-  - Your folder should open on http://localhost:8888/tree
-  - open the "vit_fine_tuning.ipynb" file
+  - open the "final_vit_finetune.ipynb" file
+  - Activate the kernel on the top right hand side of your page (given you're using VSCode with the Jupyter Notebook Extension)
+    - Select your Python virtual environment
   - Run the commands (note, the training step takes a while to finish...depends on your compute power/ how many epochs you run
     - check step 10, Training arguments is setup to change the amount of epochs
   - Once your model is saved, you can use it in Server.py!

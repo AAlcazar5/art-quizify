@@ -71,7 +71,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 p-4">
-      <h1 className="text-4xl font-bold mb-6 text-white">Image Quizify</h1>
+      <h1 className="text-4xl font-bold mb-6 text-white">Art Quizify</h1>
       <ImageUploader
         setImageStyle={setImageStyle}
         setConfidence={setConfidence}

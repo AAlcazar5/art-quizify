@@ -34,6 +34,10 @@ app.add_middleware(
 # --------------------------
 # Load and Initialize Hugging Face Model
 # --------------------------
+# Uncomment if you manage to train and download the model from the Jupyter Notebook
+# processor = ViTImageProcessor.from_pretrained("./vit_finetune")
+# model = ViTForImageClassification.from_pretrained("./vit_finetune")
+
 processor = ViTImageProcessor.from_pretrained("google/vit-base-patch16-224")
 model = ViTForImageClassification.from_pretrained("google/vit-base-patch16-224")
 
@@ -134,6 +138,7 @@ Do not include any additional text or commentary outside of this JSON object.
         # Try to parse the JSON
         try:
             data = json.loads(raw_response)
+
         except json.JSONDecodeError:
             raise HTTPException(status_code=500, detail="Invalid JSON response from LLM")
 
