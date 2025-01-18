@@ -1,6 +1,3 @@
-# Encode Final Project
-
-This Encode student project is a web application that allows users to upload an image (preferably of a piece of art) to determine what style it is, provide a description, and quiz the user on what the classifier detects. The application uses a Vision Transformers machine learning model for image classification and a backend AI Agent that generates a prediction of what is in the image and a description as well as a quiz for the user to test their knowledge. I've included the option of using a fine-tuned version of the Vision Transformers model in the server.py file.
 
 ## Features
 
