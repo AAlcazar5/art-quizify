@@ -1,65 +1,99 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
 
 interface ImageUploaderProps {
-  setImageStyle: (style: string | null) => void;
-  setConfidence: (confidence: number | null) => void;
-  setRecommendations: (recommendations: string | null) => void;
-  setDescription: (description: string | null) => void;
-  setIsLoading: (loading: boolean) => void;
+  setUploadedImage?: (imageUrl: string | null) => void; 
+  setImageStyle?: (style: string | null) => void;
+  setConfidence?: (confidence: number | null) => void;
+  setRecommendations?: (recommendations: string | null) => void;
+  setDescription?: (description: string | null) => void;
+  setIsLoading?: (loading: boolean) => void;
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ setImageStyle, setConfidence, setDescription, setRecommendations, setIsLoading }) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({
+  setUploadedImage,
+  setImageStyle,
+  setConfidence,
+  setRecommendations,
+  setDescription,
+  setIsLoading,
+}) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      setPreviewUrl(URL.createObjectURL(file)); // Set the preview URL
+    if (!event.target.files || event.target.files.length === 0) {
+      // If no file is chosen or user cancels, clear the preview (if desired)
+      setPreviewUrl(null);
+      return;
+    }
 
-      setIsLoading(true); // Set loading state to true
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    setUploadedImage?.(url);
 
-      const formData = new FormData();
-      formData.append('image', file);
+    // Begin loading (optional)
+    setIsLoading?.(true);
 
-      try {
-        const response = await fetch('http://localhost:8000/classify-image', {
-          method: 'POST',
-          body: formData,
-        });
+    // Create form data to send to your FastAPI backend
+    const formData = new FormData();
+    formData.append("image", file);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    try {
+      const response = await fetch("http://localhost:8000/classify-image", {
+        method: "POST",
+        body: formData,
+      });
 
-        const data = await response.json();
-        setImageStyle(data.imageStyle);
-        setConfidence(data.confidence);
-        setRecommendations(data.recommendations);
-        setDescription(data.description);
-
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        setImageStyle(null);
-        setConfidence(null);
-        setRecommendations('Error uploading image');
-      } finally {
-        setIsLoading(false); // Set loading state to false
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      setImageStyle?.(data.imageStyle);
+      setConfidence?.(data.confidence);
+      setRecommendations?.(data.recommendations);
+      setDescription?.(data.description);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      setImageStyle?.(null);
+      setConfidence?.(null);
+      setRecommendations?.("Error uploading image");
+      setDescription?.(null);
+    } finally {
+      setIsLoading?.(false);
     }
   };
 
   return (
-    <div className="mb-4">
-      <input type="file" onChange={handleFileChange} className="text-white" />
+    // Center everything with Tailwind classes
+    <div className="flex flex-col items-center mb-4">
+      {/* 1) Hidden native file input so we avoid "No file chosen" text entirely */}
+      <input
+        id="fileInput"
+        type="file"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
+      {/* 2) Custom label that acts as the "Upload File" button */}
+      <label
+        htmlFor="fileInput"
+        className="inline-block px-4 py-2 bg-blue-600 text-white rounded cursor-pointer hover:bg-blue-700"
+      >
+        Upload File
+      </label>
+
+      {/* 3) Optional preview of the uploaded image */}
       {previewUrl && (
-        <div className="mt-4 flex justify-center"> {/* Adjust the container size here */}
+        <div className="mt-4 flex justify-center">
           <Image
             src={previewUrl}
             alt="Image Preview"
-            width={300} // Aspect ratio width
-            height={300} // Aspect ratio height
-            objectFit="contain"
+            width={300}
+            height={300}
+            style={{ objectFit: "contain" }}
           />
         </div>
       )}

@@ -35,7 +35,7 @@ Navigate to the `backend` directory and create a virtual environment:
 `source venv/bin/activate` # On Windows use `venv\Scripts\activate`
 
 Install the required Python packages:
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ### 4. Set Up Environment Variables
 Create a ".env" file in the root directory and add the following environment variables:
