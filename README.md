@@ -1,3 +1,4 @@
+## Art Quizify
 
 ## Features
 
@@ -5,6 +6,9 @@
 - Detect what's in the picture using the Vision Transformers model.
 - Click "Generate Quiz" to test your knowledge of what's in the image.
 - Answer the questions and submit to see your score.
+- Choose from one of thirteen categories or random questions to test your art knowledge
+- Practice your drawing on the canvas tab
+- Check your points, streaks and medals in the progress tab
 
 ## App Flow
 
@@ -20,7 +24,7 @@
 ## Setup Instructions
 
 ### 1. Clone the Repository
-`git clone https://github.com/AAlcazar5/encode-final-project`
+`git clone https://github.com/AAlcazar5/art-quizify`
 
 ### 2. Install Frontend Packages
 `npm install`
